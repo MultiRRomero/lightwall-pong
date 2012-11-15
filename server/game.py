@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import time
+
 """ This represents a ball object in pong """
 class Ball:
     def __init__(self, position_x, position_y, direction, speed):
@@ -7,6 +9,9 @@ class Ball:
         self.py = position_y  # y coordinate (in pixels)
         self.dir = direction  # ball direction (in degrees)
         self.vel = speed      # ball velocity (in pixels per second)
+
+    def update(self):
+        print 'update'
 
     def serialize(self):
         return ','.join([str(self.px), str(self.py)])
@@ -27,6 +32,15 @@ class GameState:
     def __init__(self, num_players):
         self.players = [ Player(i, 0, 0, 0) for i in range(num_players) ]
         self.ball = Ball(0, 0, 0, 0)
+
+    def runInstance(self):
+        self.ball.update();
+
+    def run(self):
+        # Wake up every 10ms
+        while True:
+            self.runInstance()
+            time.sleep(.01)
 
     def serialize(self):
         parts = [ self.ball.serialize() ]
