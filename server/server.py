@@ -1,18 +1,15 @@
 from flask import Flask
 
+from game import GameState
+
 app = Flask(__name__)
 
-@app.route('/')
-def whoo():
-    return 'WHOA WHOO'
+NUM_PLAYERS = 4
+gameState = GameState(NUM_PLAYERS)
 
 @app.route('/sync')
 def syncSync():
-    return '3,3\n2,3\n1,1\n'
-
-@app.route('/abc')
-def whoo():
-    return 'WHOA WHOO ACX'
+    return gameState.serialize()
 
 @app.route('/hello/<name>')
 def greet(name='Stranger'):
